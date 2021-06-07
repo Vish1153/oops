@@ -1,0 +1,59 @@
+void ConfirmTicket()
+{
+	fstream t_file,c_file,file;
+	string temp_num;
+	int m=0;
+	file.open("newcus.txt");
+	//t_file.open("bus.txt");
+	if(!file){//if file doesn't exists
+	  cout<<"No Record Exists"<<endl;
+	  file.close();
+	}
+	else{
+	//  file.open("bus.txt",ios::in);
+	std::ifstream file("newcus.txt");
+	cout<<"Enter bus number you want to book"<<endl;
+	cin>>temp_num;
+	// file>>t_number>>t_name>>t_seats>>t_driverName>>t_freeseats;
+	while(!file.eof()){
+	  file>>t_number>>t_name>>t_seats>>t_driverName>>t_freeseats>>t_dp>>t_ds;
+	  if(temp_num==t_number){
+		  if(freeseats==0)
+		  {
+			  cout<<"Sorry no seats available"<<endl;
+			  BookTicket();
+		  }
+		  else
+		  {
+			  cout<<"Enter Name:"<<endl;
+			  cin>>c_name;
+			  cout<<"Bus number:"<<t_number<<endl;
+			  while(m!=1)
+			  {
+				  c_seat=RandomSeat(t_seats);
+				  m=checkcus(c_seat,t_number,"",1);
+			  }
+			  m=0;
+			  cout<<"Seat Number:"<<c_seat<<endl;
+			  while(m!=1)
+			  {
+				  c_id=RandomID();
+				  m=checkcus("","",c_id,2);
+			  }
+			  cout<<"Customer ID:(Please note this!)"<<c_id<<endl;
+			  c_file.open("cus.txt",ios::out|ios::app);
+			  c_file<<endl<<c_name<<" "<<" "<<c_seat<<" "<<t_number<<
+			  " "<<c_id;
+			  c_file.close();
+			  remove("newcus.txt");
+			  cout<<"Booked Successfully!"<<endl;
+			  break;
+
+		  }
+
+
+	  }
+	}
+	}
+	CustomerChoice();
+}
